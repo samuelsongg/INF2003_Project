@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    font-family: sans-serif;
+    background-color: lightblue;
+}
+
+.content {
+    margin: 0 auto;
+    width: 400px;
+    padding: 200px;
+    text-align: center;
+    
+}
+
+table, td, th {
+    border: 1px solid #aaa;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    height: 30px;
+}
+
+td {
+    text-align: center;
+    padding: 5px;
+}
+
+.form {
+    margin-top: 20px;
+}
+
+#content {
+    width: 70%;
+}
+
+.login-content {
+    margin: 0 auto;
+    width: 400px;
+    padding: 200px;
+    text-align: center;
+}
+
+.login-form-container {
+    text-align: center;
+}
+
+.login-form-input {
+    margin: 2px;
+    padding: 2px;
+    display: inline-block;
+}
+
+.login-form-submit {
+    text-align: right;
+    margin-right: 116px;
+}
+
+.wrong-credentials-msg {
+    color: red;
+    font-size: 70%;
+    text-align: center;
+}
+
+.signup-content {
+    margin: 0 auto;
+    width: 400px;
+    padding: 200px;
+    text-align: center;
+}
+
+.signup-form-container {
+    text-align: center;
+}
+
+.signup-form-input {
+    margin: 2px;
+    padding: 2px;
+    display: inline-block;
+}
+
+.signup-form-submit {
+    text-align: right;
+    margin-right: 116px;
+}
