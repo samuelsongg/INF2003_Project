@@ -6,7 +6,7 @@
 
 ## Troubleshooting
 - Make sure you're in the virtual environment:
-    - \enc\Scripts\activate.bat
+    - \env\Scripts\activate.bat
 - If you encounter an error: table not found, run the following in python shell:
     - flask shell
     - from app import db
