@@ -1,8 +1,12 @@
 # INF2003_Project
 
-## Libraries to Install
+## Set Up Virtual Environment
 1. pip install virtualenv
-2. pip install flask flask-sqlalchemy flask-login
+2. virtualenv env
+3. env\Scripts\activate
+
+## Libraries to Install
+1. pip install flask flask-sqlalchemy flask-login
 
 ## Troubleshooting
 - Make sure to activate the virtual environment:
