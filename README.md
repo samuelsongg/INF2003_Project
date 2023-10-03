@@ -7,6 +7,7 @@
 
 ## Libraries to Install
 1. `pip install flask`
+2. `pip install pymongo`
 
 ## Running Application
 1. Make sure to activate the virtual environment:

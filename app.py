@@ -69,7 +69,7 @@ def signup():
             conn.commit()
             conn.close()
 
-            return redirect('/login')
+            return render_template('login.html')
         except Exception as e:
             print(str(e))
             # return 'There was an unexpected issue. Please try again.'
