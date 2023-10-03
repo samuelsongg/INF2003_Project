@@ -5,8 +5,8 @@
 2. pip install flask flask-sqlalchemy flask-login
 
 ## Troubleshooting
-- Make sure you're in the virtual environment:
-    - \env\Scripts\activate.bat
+- Make sure to activate the virtual environment:
+    - env\Scripts\activate
 - If you encounter an error: table not found, run the following in python shell:
     - flask shell
     - from app import db
