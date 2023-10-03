@@ -1,11 +1,10 @@
-from flask import Flask, render_template, url_for, request, redirect, session
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from flask import Flask, render_template, request, redirect, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import secrets
 import sqlite3
 
 app = Flask(__name__)
+# Secret key needs to be set to enable sessions.
 secret_key = secrets.token_hex(24)
 app.secret_key = secret_key
 
@@ -75,6 +74,12 @@ def signup():
             return 'There was an unexpected issue. Please try again.'
 
     return render_template('signup.html')
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    if request.method == 'POST':
+        session.clear()
+        return render_template('index.html', login_status=0)
     
 if __name__ == '__main__':
 

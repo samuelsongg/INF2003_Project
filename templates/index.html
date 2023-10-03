@@ -12,7 +12,11 @@
          or <a href="/signup">sign up</a>!</h4>
     {% else %}
     <h4 style="text-align: center">Welcome, {{session['first_name']}}!</h4>
+    <div class="logout-button">
+        <form action="/logout" method="POST">
+            <input type="submit" value="Logout">
+        </form>
+    </div>
     {% endif %}
-    
 </div>
 {% endblock %}
