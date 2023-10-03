@@ -64,14 +64,17 @@ def signup():
 
         try:
             conn = get_db_connection()
-            conn.execute('INSERT INTO users (first_name, last_name, email, password, address, phone_number) VALUES (?, ?, ?, ?, ?, ?)', (first_name, last_name, email, password, address, phone_number))
+            conn.execute('INSERT INTO users (first_name, last_name, email, password, address, phone_number) VALUES (?, ?, ?, ?, ?, ?)', 
+                        (first_name, last_name, email, password, address, phone_number))
             conn.commit()
             conn.close()
 
             return redirect('/login')
         except Exception as e:
             print(str(e))
-            return 'There was an unexpected issue. Please try again.'
+            # return 'There was an unexpected issue. Please try again.'
+            # signup_status 2 means email already exists.
+            return render_template('signup.html', signup_status=2)
 
     return render_template('signup.html')
 

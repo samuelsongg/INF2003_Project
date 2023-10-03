@@ -6,6 +6,10 @@
 
 {% block body %}
 <div class="signup-content">
+    {% if signup_status == 2 %}
+        <h1 class="wrong-credentials-msg">The email already exists.</h1>
+    {% endif %}
+
     <h1 style="text-align: center">Sign Up</h1>
 
     <div class="signup-form-container" id="signup_form">
