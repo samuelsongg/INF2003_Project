@@ -4,13 +4,6 @@ from datetime import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 import secrets
 
-# pip install flask flask-login flask-sqlalchemy
-
-# if encountered an error: table not found, run the following commands in python shell:
-# flask shell
-# from app import db
-# db.create_all()
-
 app = Flask(__name__)
 secret_key = secrets.token_hex(24)
 app.secret_key = secret_key
