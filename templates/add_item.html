@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Ecommerce+</title>
+{% endblock %}
+
+{% block body %}
+
+<main class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">Filter part</div>
+
+      <div class="col-md-8">
+        
+        <form action="/add_item" method="POST"  class="row g-3">
+            <div class="col-12">
+              <label for="productName" class="form-label">Name</label>
+              <input type="text" name="productName" class="form-control" id="productName">
+            </div>
+
+            <div class="col-md-6">
+              <label for="productStock" class="form-label">Stock</label>
+              <input type="text" name="productStock" class="form-control" id="productStock">
+            </div>
+            <div class="col-md-4">
+              <label for="productCategory" class="form-label">Category</label>
+              <select id="productCategory" class="form-select" name="productCategory">
+                <option selected>Choose...</option>
+                <option>Leaf</option>
+                <option>Mushroom</option>
+                <option>Pepper</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="productPrice" class="form-label">Price</label>
+              <input type="text" name="productPrice" class="form-control" id="productPrice">
+            </div>
+            
+            <div class="col-12">
+              <label for="productDescription" class="form-label">Description</label>
+              <input type="text" name="productDescription" class="form-control" id="productDescription" placeholder="Item Description">
+            </div>
+
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+
+     </div>
+
+      <div class="col-md-2">Cart</div>
+
+    </div>
+</main>
+
+
+{% endblock %}

@@ -10,3 +10,7 @@ def index():
 @main.route('/profile')
 def profile():
     return 'Profile'
+
+@main.route('/add_item')
+def add_item():
+    return 'Add_item'

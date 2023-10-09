@@ -1,7 +1,10 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 import secrets
 import sqlite3
+
+from flask_pymongo import PyMongo
+import urllib
 
 app = Flask(__name__)
 # Secret key needs to be set to enable sessions.
@@ -19,9 +22,46 @@ def get_db_connection():
 # print(test)
 # conn.close()
 
+#Connecting to mongoDB
+escaped_username = urllib.parse.quote_plus("malcolm5964")
+escaped_password = urllib.parse.quote_plus("@T0012069z")
+app.config["MONGO_URI"] = f"mongodb+srv://{escaped_username}:{escaped_password}@databaseproject.rlzcysi.mongodb.net/Product?retryWrites=true&w=majority"
+mongodb_client = PyMongo(app)
+db = mongodb_client.db
+
+#Display item
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    return render_template('index.html')
+    products = []
+    for product in db.product.find().sort("productName"):
+        product["_id"] = str(product["_id"])
+        products.append(product)
+    return render_template('index.html', products=products)
+
+
+#Adding new item
+@app.route('/add_item', methods=['GET', 'POST'])
+def add_item():
+    if request.method == 'POST':
+        productName = request.form['productName']
+        productStock = request.form['productStock']
+        productCategory = request.form['productCategory']
+        productPrice = request.form['productPrice']
+        productDescription = request.form['productDescription']
+
+        db.product.insert_one({
+            "name": productName,
+            "stock": productStock,
+            "category": productCategory,
+            "price": productPrice,
+            "description": productDescription
+        })
+
+        flash("Added new item successfully", "success")
+        return redirect("/add_item")
+    
+    return render_template('add_item.html')
+
     
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -84,6 +124,8 @@ def logout():
         session.clear()
         return render_template('index.html', login_status=0)
     
-if __name__ == '__main__':
 
+
+    
+if __name__ == '__main__':
     app.run(debug=True)
