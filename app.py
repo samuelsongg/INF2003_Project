@@ -29,8 +29,6 @@ app.config["MONGO_URI"] = f"mongodb+srv://{escaped_username}:{escaped_password}@
 mongodb_client = PyMongo(app)
 db = mongodb_client.db
 
-shopping_cart = []
-
 #Display item
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -39,7 +37,6 @@ def index():
         product["_id"] = str(product["_id"])
         products.append(product)
     return render_template('index.html', products=products)
-
 
 #Adding new item
 @app.route('/add_item', methods=['GET', 'POST'])
@@ -126,6 +123,35 @@ def signup():
 def logout():
     session.clear()
     return redirect('/')
+
+@app.route('/cart', methods=['GET', 'POST'])
+def cart():
+    if request.method == 'POST':
+        product_id = request.form['product_id']
+        product_name = request.form['product_name']
+        product_price = request.form['product_price']
+        user_id = session['user_id']
+
+        try:
+            conn = get_db_connection()
+            conn.execute('INSERT INTO shopping_cart (user_id, product_id, product_name, product_price, product_quantity) VALUES (?, ?, ?, ?, ?)', 
+                        (user_id, product_id, product_name, product_price, 1))
+            conn.commit()
+            conn.close()
+
+            return render_template('cart.html')
+        except Exception as e:
+            print(str(e))
+            return render_template('cart.html')
+
+    print(session['user_id'])
+
+    conn = get_db_connection()
+    shopping_cart = conn.execute('SELECT * FROM shopping_cart WHERE user_id = ?', (session['user_id'],)).fetchall()
+    print(shopping_cart)
+    conn.close()
+
+    return render_template('cart.html')
     
     
 if __name__ == '__main__':

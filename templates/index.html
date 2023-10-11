@@ -28,7 +28,12 @@
               
               <h6 class="card-subtitle mb-2 text-muted">{{ product.category }}</h6>
               <p class="card-text">{{ product.description }}.</p>
-              <a href="#" class="btn btn-primary">Add to Cart</a>
+              <form action="/cart" method="POST">
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <input type="hidden" name="product_name" value="{{ product.name }}">
+                <input type="hidden" name="product_price" value="{{ product.price }}">                
+                <input type="submit" value="Add to Cart" class="btn btn-primary" id="add_to_cart">
+              </form>
             </div>
           </div>
         </div>
@@ -38,10 +43,9 @@
         </div>
       </div>
 
-      <div class="col-md-2">Cart</div>
-        <div class="card" style="width: 10rem; max-width: 100%; height: auto;">
-
-        </div>
+      <div class="col-md-2">
+        <a href="/cart" class="btn btn-primary" id="cart">View Cart</a>
+      </div>
     </div>
 </main>
 
