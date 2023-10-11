@@ -11,3 +11,13 @@ CREATE TABLE users (
     account_type varchar(10) NOT NULL DEFAULT "user",
     time_created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE shopping_cart (
+    cart_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    price INTEGER NOT NULL,
+    time_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);

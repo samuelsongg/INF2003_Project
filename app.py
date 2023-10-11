@@ -29,6 +29,8 @@ app.config["MONGO_URI"] = f"mongodb+srv://{escaped_username}:{escaped_password}@
 mongodb_client = PyMongo(app)
 db = mongodb_client.db
 
+shopping_cart = []
+
 #Display item
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -82,12 +84,14 @@ def login():
                 session['first_name'] = user['first_name']
                 session['last_name'] = user['last_name']
                 session['account_type'] = user['account_type']
-                return render_template('index.html', login_status=1, first_name=user['first_name'])
+                return redirect('/')
             else:
-                return render_template('login.html', login_status=2)
+                session['login_status'] = 2
+                return redirect('/login')
         except Exception as e:
             print(str(e)) # Troubleshooting purposes.
-            return render_template('login.html', login_status=2)
+            session['login_status'] = 2
+            return redirect('/login')
     
     
     return render_template('login.html')
@@ -120,12 +124,9 @@ def signup():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    if request.method == 'POST':
-        session.clear()
-        return render_template('index.html', login_status=0)
+    session.clear()
+    return redirect('/')
     
-
-
     
 if __name__ == '__main__':
     app.run(debug=True)

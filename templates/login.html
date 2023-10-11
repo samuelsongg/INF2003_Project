@@ -6,7 +6,7 @@
 
 {% block body %}
 <div class="login-content">
-    {% if login_status == 2 %}
+    {% if session['login_status'] == 2 %}
         <h1 class="wrong-credentials-msg">You have entered your credentials wrongly.</h1>
     {% endif %}
 

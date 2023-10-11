@@ -26,11 +26,11 @@
                   </li>
                 </ul>
                 <div class="d-flex">
-                  {% if session['login_status'] == 0 %}
+                  {% if session['login_status'] == 1 %}
+                  <a class="btn btn-outline-success" href="/logout">Logout</a>
+                  {% else %}
                   <a class="btn btn-outline-success" href="/login">Login</a>
                   <a class="btn btn-outline-success" href="/signup">Sign-Up</a>
-                  {% else %}
-                  <a class="btn btn-outline-success" href="/logout">Logout</a>
                   {% endif %}
                 </div>
               </div>
