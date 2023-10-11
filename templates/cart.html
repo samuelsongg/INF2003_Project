@@ -7,19 +7,22 @@
 {% block body %}
 
 <main class="container-fluid">
-    <div class="row">
-      <div class="col-md-8">
-        <div class="row justify-content-evenly">
-            <h2>Shopping Cart</h2>                        
-            <ol>
-                {% for item in shopping_cart %}
-                <li>{{ item }}</li>
-                {% print(item) %}
-                {% endfor %}
-            </ol>
+  <h2>Shopping Cart</h2>                        
+  <ol>
+      {% for item in shopping_cart %}
+      <li>
+        <div class="row col-md-2" id="item_name">
+          <div>
+            Item: {{ item.product_name }}
+          </div>
+          <div id="product_price">
+            Price: {{ item.product_price }}
+          </div>
         </div>
-      </div>
-    </div>
+        <br>
+      </li>
+      {% endfor %}
+  </ol>
 </main>
 
 

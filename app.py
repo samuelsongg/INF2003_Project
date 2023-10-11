@@ -113,7 +113,6 @@ def signup():
             return render_template('login.html')
         except Exception as e:
             print(str(e))
-            # return 'There was an unexpected issue. Please try again.'
             # signup_status 2 means email already exists.
             return render_template('signup.html', signup_status=2)
 
@@ -126,33 +125,34 @@ def logout():
 
 @app.route('/cart', methods=['GET', 'POST'])
 def cart():
-    if request.method == 'POST':
-        product_id = request.form['product_id']
-        product_name = request.form['product_name']
-        product_price = request.form['product_price']
-        user_id = session['user_id']
+    try:
+        if request.method == 'POST' and session['login_status'] == 1:
+            product_id = request.form['product_id']
+            product_name = request.form['product_name']
+            product_price = request.form['product_price']
+            user_id = session['user_id']
 
-        try:
+            try:
+                conn = get_db_connection()
+                conn.execute('INSERT INTO shopping_cart (user_id, product_id, product_name, product_price, product_quantity) VALUES (?, ?, ?, ?, ?)', 
+                            (user_id, product_id, product_name, product_price, 1))
+                conn.commit()
+                conn.close()
+
+                return redirect('/')
+            
+            except Exception as e:
+                print(str(e))
+                return render_template('index.html')
+        
+        elif request.method == 'GET':
             conn = get_db_connection()
-            conn.execute('INSERT INTO shopping_cart (user_id, product_id, product_name, product_price, product_quantity) VALUES (?, ?, ?, ?, ?)', 
-                        (user_id, product_id, product_name, product_price, 1))
-            conn.commit()
+            shopping_cart = conn.execute('SELECT * FROM shopping_cart WHERE user_id = ?', (session['user_id'],)).fetchall()
             conn.close()
 
-            return render_template('cart.html')
-        except Exception as e:
-            print(str(e))
-            return render_template('cart.html')
-
-    print(session['user_id'])
-
-    conn = get_db_connection()
-    shopping_cart = conn.execute('SELECT * FROM shopping_cart WHERE user_id = ?', (session['user_id'],)).fetchall()
-    print(shopping_cart)
-    conn.close()
-
-    return render_template('cart.html')
-    
+            return render_template('cart.html', shopping_cart=shopping_cart)
+    except:
+        return redirect('/login')
     
 if __name__ == '__main__':
     app.run(debug=True)

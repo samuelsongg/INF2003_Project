@@ -43,9 +43,12 @@
         </div>
       </div>
 
+      {% if session['login_status'] == 1 %}
       <div class="col-md-2">
         <a href="/cart" class="btn btn-primary" id="cart">View Cart</a>
       </div>
+      {% endif %}
+      
     </div>
 </main>
 
