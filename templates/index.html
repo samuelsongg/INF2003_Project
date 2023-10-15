@@ -22,16 +22,16 @@
 
             <div class="card-body">
               <div class="row justify-content-evenly">
-                <div class="col"><h5 class="card-title">{{ product.name }}</h5></div>
-                <div class="col"><h5 class="card-title">{{ product.price }}</h5></div>
+                <div class="col"><h5 class="card-title">{{ product.productName }}</h5></div>
+                <div class="col"><h5 class="card-title">{{ product.productPrice }}</h5></div>
               </div>
               
-              <h6 class="card-subtitle mb-2 text-muted">{{ product.category }}</h6>
-              <p class="card-text">{{ product.description }}.</p>
+              <h6 class="card-subtitle mb-2 text-muted">{{ product.productCategory }}</h6>
+              <p class="card-text">{{ product.productDescription }}.</p>
               <form action="/cart" method="POST">
-                <input type="hidden" name="product_id" value="{{ product.id }}">
-                <input type="hidden" name="product_name" value="{{ product.name }}">
-                <input type="hidden" name="product_price" value="{{ product.price }}">                
+                <input type="hidden" name="product_id" value="{{ product._id }}">
+                <input type="hidden" name="product_name" value="{{ product.productName}}">
+                <input type="hidden" name="product_price" value="{{ product.productPrice}}">                
                 <input type="submit" value="Add to Cart" class="btn btn-primary" id="add_to_cart">
               </form>
             </div>

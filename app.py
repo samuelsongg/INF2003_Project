@@ -36,6 +36,7 @@ def index():
     for product in db.product.find().sort("productName"):
         product["_id"] = str(product["_id"])
         products.append(product)
+        print(product)
     return render_template('index.html', products=products)
 
 #Adding new item
@@ -49,11 +50,11 @@ def add_item():
         productDescription = request.form['productDescription']
 
         db.product.insert_one({
-            "name": productName,
-            "stock": productStock,
-            "category": productCategory,
-            "price": productPrice,
-            "description": productDescription
+            "productName": productName,
+            "productStock": productStock,
+            "productCategory": productCategory,
+            "productPrice": productPrice,
+            "productDescription": productDescription
         })
 
         flash("Added new item successfully", "success")
