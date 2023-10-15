@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Ecommerce+</title>
+{% endblock %}
+
+{% block body %}
+
+<main class="container-fluid">
+  <h2>Wishlist</h2>                        
+  <ol>
+      {% for item in shopping_cart %}
+      <li>
+        <div class="row col-md-2" id="item_name">
+          <div>
+            Item: {{ item.product_name }}
+          </div>
+          <div id="product_price">
+            Price: {{ item.product_price }}
+          </div>
+        </div>
+        <br>
+      </li>
+      {% endfor %}
+  </ol>
+</main>
+
+
+{% endblock %}

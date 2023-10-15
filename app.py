@@ -155,5 +155,38 @@ def cart():
     except:
         return redirect('/login')
     
+
+@app.route('/wishlist', methods=['GET', 'POST'])
+def wishlist():
+    try:
+        if request.method == 'POST' and session['login_status'] == 1:
+            product_id = request.form['product_id']
+            product_name = request.form['product_name']
+            product_price = request.form['product_price']
+            user_id = session['user_id']
+
+            try:
+                conn = get_db_connection()
+                conn.execute('INSERT INTO wishlist (user_id, product_id, product_name, product_price) VALUES (?, ?, ?, ?)',
+                             (user_id, product_id, product_name, product_price))
+                conn.commit()
+                conn.close()
+
+                return redirect('/')
+
+            except Exception as e:
+                print(str(e))
+                return render_template('index.html')
+
+        elif request.method == 'GET':
+            conn = get_db_connection()
+            shopping_cart = conn.execute(
+                'SELECT * FROM wishlist WHERE user_id = ?', (session['user_id'],)).fetchall()
+            conn.close()
+
+            return render_template('wishlist.html', shopping_cart=shopping_cart)
+    except:
+        return redirect('/login')
+    
 if __name__ == '__main__':
     app.run(debug=True)

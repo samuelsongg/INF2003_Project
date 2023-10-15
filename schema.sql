@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS shopping_cart;
+DROP TABLE IF EXISTS wishlist;
 
 CREATE TABLE users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,6 +20,16 @@ CREATE TABLE shopping_cart (
     product_id INTEGER NOT NULL,
     product_name varchar(100) NOT NULL,
     product_quantity INTEGER NOT NULL,
+    product_price INTEGER NOT NULL,
+    time_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE wishlist (
+    wishlist_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    product_name varchar(100) NOT NULL,
     product_price INTEGER NOT NULL,
     time_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
