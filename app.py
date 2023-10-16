@@ -36,7 +36,7 @@ def index():
     for product in db.product.find().sort("productName"):
         product["_id"] = str(product["_id"])
         products.append(product)
-        print(product)
+        # print(product)
     return render_template('index.html', products=products)
 
 #Adding new item
@@ -151,7 +151,7 @@ def cart():
             except Exception as e:
                 print(str(e))
                 return render_template('index.html')
-        
+    
         elif request.method == 'GET':
             conn = get_db_connection()
             shopping_cart = conn.execute('SELECT * FROM shopping_cart WHERE user_id = ?', (session['user_id'],)).fetchall()
@@ -160,6 +160,22 @@ def cart():
             return render_template('cart.html', shopping_cart=shopping_cart)
     except:
         return redirect('/login')
+    
+@app.route('/cart_update', methods=['GET', 'POST'])
+def cart_update():
+    try:
+        if request.method == 'POST' and session['login_status'] == 1:
+            conn = get_db_connection()
+            conn.execute('UPDATE shopping_cart SET product_quantity = ? WHERE user_id = ? AND product_id = ?', (request.form['quantity'], session['user_id'], request.form['product_id']))
+            conn.commit()
+            conn.close()
+            print(request.form['quantity'])
+            print(request.form['product_id'])
+            return redirect('/cart')
+    except:
+        print("Error")
+        return redirect('/cart')
+
     
 
 @app.route('/wishlist', methods=['GET', 'POST'])

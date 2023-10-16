@@ -27,7 +27,10 @@
                 Quantity: 
               </div>
               <div class="quantity-dynamic">
-                <input class="quantity" type="number" name="quantity" id="quantity" min="1" max="99" value="{{ item.product_quantity }}">
+                <form action="/cart_update" method="POST">
+                  <input class="product_id" type="hidden" name="product_id" value="{{ item.product_id }}">
+                  <input class="quantity" type="number" name="quantity" id="quantity" min="1" max="99" value="{{ item.product_quantity }}">
+                </form>
               </div>
             </div>
           </div>
