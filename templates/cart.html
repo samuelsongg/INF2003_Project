@@ -6,23 +6,36 @@
 
 {% block body %}
 
-<main class="container-fluid">
-  <h2>Shopping Cart</h2>                        
-  <ol>
+<main class="container-fluid main-cart-container">
+  <h2>Shopping Cart</h2>
+  <div class="shopping-cart-list">
+    <ol>
       {% for item in shopping_cart %}
       <li>
-        <div class="row col-md-2" id="item_name">
-          <div>
-            Item: {{ item.product_name }}
+        <div class="product-box-flex">
+          <div class="product-box-description">
+            <div class="product-name" id="item_name">
+              Item: {{ item.product_name }}
+            </div>
+            <div class="product-price" id="product_price">
+              Price: {{ item.product_price }}
+            </div>
           </div>
-          <div id="product_price">
-            Price: {{ item.product_price }}
+          <div class="product-box-quantity">
+            <div class="product-quantity">
+              <div class="quantity-attribute-name">
+                Quantity: 
+              </div>
+              <div class="quantity-dynamic">
+                <input class="quantity" type="number" name="quantity" id="quantity" min="1" max="99" value="{{ item.product_quantity }}">
+              </div>
+            </div>
           </div>
         </div>
-        <br>
       </li>
       {% endfor %}
   </ol>
+  </div>                      
 </main>
 
 

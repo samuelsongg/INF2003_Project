@@ -139,3 +139,63 @@ td {
     margin-top: 8px;
     justify-content: right;
 }
+
+.main-cart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shopping-cart-list {
+    display: flex;
+    flex-direction: column;
+    width: 550px;
+}
+
+.product-box-flex {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: rgb(216, 216, 216);
+    background-color: rgb(238, 238, 238);
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.product-box-description {
+    flex: 1;
+}
+
+.product-box-quantity {
+    display: flex;
+    width: 175px;
+    align-items: center;
+    border-left: solid;
+    border-width: 1px;
+    border-color: rgb(216, 216, 216);
+    padding-left: 10px;
+}
+
+.product-quantity {
+    display: flex;
+    flex-direction: row;
+}
+
+.quantity-attribute-name {
+    width: 100px;
+    padding-left: 15px;
+}
+
+.quantity-dynamic {
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    text-align: right;
+}
+
+.quantity {
+    width: 45px;
+    text-align: center;
+}

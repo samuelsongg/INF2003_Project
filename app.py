@@ -135,10 +135,16 @@ def cart():
 
             try:
                 conn = get_db_connection()
-                conn.execute('INSERT INTO shopping_cart (user_id, product_id, product_name, product_price, product_quantity) VALUES (?, ?, ?, ?, ?)', 
-                            (user_id, product_id, product_name, product_price, 1))
-                conn.commit()
-                conn.close()
+                product = conn.execute('SELECT * FROM shopping_cart WHERE user_id = ? AND product_id = ?', (user_id, product_id)).fetchone()
+                if product is not None:
+                    conn.execute('UPDATE shopping_cart SET product_quantity = product_quantity + 1 WHERE user_id = ? AND product_id = ?', (user_id, product_id))
+                    conn.commit()
+                    conn.close()
+                else:
+                    conn.execute('INSERT INTO shopping_cart (user_id, product_id, product_name, product_price, product_quantity) VALUES (?, ?, ?, ?, ?)', 
+                                (user_id, product_id, product_name, product_price, 1))
+                    conn.commit()
+                    conn.close()
 
                 return redirect('/')
             
