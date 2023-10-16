@@ -14,27 +14,39 @@
       <li>
         <div class="user-box-flex">
           <div class="user-box-description">
-            <div class="first-name">
-              {% if user.lastname != null %}
-              Name: {{ user.first_name + " " + user.last_name }}
-              {% else %}
-              Name: {{ user.first_name }}
-              {% endif %}
+            <div class="manage-user-left-section">
+              <div class="first-name">
+                {% if user.lastname != null %}
+                Name: {{ user.first_name + " " + user.last_name }}
+                {% else %}
+                Name: {{ user.first_name }}
+                {% endif %}
+              </div>
+              <div class="email">
+                Email: {{ user.email }}
+              </div>
+              <div class="address">
+                Address: {{ user.address }}
+              </div>
+              <div class="phone-number">
+                  Phone Number: {{ user.phone_number }}
+              </div>
+              <div class="account_type">
+                  Account Type: {{ user.account_type }}
+              </div>
+              <div class="date-created">
+                  Date Created: {{ user.time_created }}
+              </div>
             </div>
-            <div class="email">
-              Email: {{ user.email }}
-            </div>
-            <div class="address">
-              Address: {{ user.address }}
-            </div>
-            <div class="phone-number">
-                Phone Number: {{ user.phone_number }}
-            </div>
-            <div class="account_type">
-                Account Type: {{ user.account_type }}
-            </div>
-            <div class="date-created">
-                Date Created: {{ user.time_created }}
+            <div class="manage-user-right-section">
+              <div class="delete-user-container">
+                <form class="delete-user-form" action="/delete_user" method="POST">
+                  <input class="user_id" type="hidden" name="user_id" value="{{ user.user_id }}">
+                  <button class="delete-user-button">
+                    <img src="/static/css/icons/trash.svg" alt="delete-user-image" class="delete-user-image">
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

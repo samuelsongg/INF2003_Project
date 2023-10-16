@@ -69,8 +69,24 @@ def manage_user():
             conn = get_db_connection()
             users = conn.execute('SELECT * FROM users').fetchall()
             conn.close()
-            print("success")
+
             return render_template('manage_user.html', users=users)
+        
+    except Exception as e:
+        print(str(e))
+        return redirect('/')
+    
+@app.route('/delete_user', methods=['GET', 'POST'])
+def delete_user():
+    try:
+        if request.method == 'POST':
+            conn = get_db_connection()
+            conn.execute('DELETE FROM users WHERE user_id = ?', (request.form['user_id'],))
+            conn.commit()
+            conn.close()
+
+            return redirect('/manage_user')
+        
     except Exception as e:
         print(str(e))
         return redirect('/')
@@ -188,7 +204,7 @@ def cart_update():
 @app.route('/cart_delete', methods=['GET', 'POST'])
 def cart_delete():
     try:
-        if request.method == 'POST' and session['login_status'] == 1:
+        if request.method == 'POST':
             conn = get_db_connection()
             conn.execute('DELETE FROM shopping_cart WHERE user_id = ? AND product_id = ?', (session['user_id'], request.form['product_id']))
             conn.commit()

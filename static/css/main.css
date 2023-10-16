@@ -200,22 +200,56 @@ td {
     text-align: center;
 }
 
-.delete-cart-container {
+.delete-cart-container,
+.delete-user-container {
     display: flex;
     justify-content: center;
     padding-bottom: 5px;
     padding-right: 5px;
 }
 
-.delete-cart-form {
+.delete-cart-form,
+.delete-user-form {
     display: flex;
     justify-content: center;
 }
 
-.delete-cart-button {
+.delete-cart-button,
+.delete-user-button {
     border: none;
 }
 
-.delete-cart-image {
+.delete-cart-image,
+.delete-user-image {
     height: 20px;
+}
+
+.user-box-flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.user-box-description {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: rgb(216, 216, 216);
+    background-color: rgb(238, 238, 238);
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    padding: 10px 0px 10px 10px;
+}
+
+.manage-user-left-section {
+    flex: 1;
+}
+
+.manage-user-right-section {
+    display: flex;
+    width: 40px;
+    justify-content: center;
+    align-items: center;
 }
