@@ -7,38 +7,23 @@
 {% block body %}
 <div class="signup-content">
     {% if signup_status == 2 %}
-        <h1 class="wrong-credentials-msg">The email already exists.</h1>
+        <div>
+            <h1 class="wrong-credentials-msg">The email already exists.</h1>
+        </div>
     {% endif %}
 
-    <h1 style="text-align: center">Sign Up</h1>
-
     <div class="signup-form-container" id="signup_form">
+        <h1 style="text-align: center">Sign Up</h1>
         <form action="/signup" method="POST">
             <div class="signup-form-input">
-                <input type="text" name="first_name" id="first_name" placeholder="First Name" required>
+                <input class="sign-up-input" type="text" name="first_name" id="first_name" placeholder="First Name" required>
+                <input class="sign-up-input" type="text" name="last_name" id="last_name" placeholder="Last Name">
+                <input class="sign-up-input" type="email" name="email" id="email" placeholder="Email" required>
+                <input class="sign-up-input" type="password" name="password" id="password" placeholder="Password" required>
+                <input class="sign-up-input" type="text" name="address" id="address" placeholder="Address" required>
+                <input class="sign-up-input" type="text" name="phone_number" id="phone_number" placeholder="Phone Number: 81234567" pattern="[0-9]{8}" required>
             </div>
-            <br>
-            <div class="signup-form-input">
-                <input type="text" name="last_name" id="last_name" placeholder="Last Name">
-            </div>
-            <br>
-            <div class="signup-form-input">
-                <input type="email" name="email" id="email" placeholder="Email" required>
-            </div>
-            <br>
-            <div class="signup-form-input">
-                <input type="password" name="password" id="password" placeholder="Password" required>
-            </div>
-            <br>
-            <div class="signup-form-input">
-                <input type="text" name="address" id="address" placeholder="Address" required>
-            </div>
-            <br>
-            <div class="signup-form-input">
-                <input type="text" name="phone_number" id="phone_number" placeholder="Phone Number: 81234567" pattern="[0-9]{8}" required>
-            </div>
-            <br>
-            <div class="signup-form-submit">
+            <div class="sign-up-submit-button">
                 <input type="submit" value="Sign Up">
             </div>
         </form>

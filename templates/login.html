@@ -10,16 +10,12 @@
         <h1 class="wrong-credentials-msg">You have entered your credentials wrongly.</h1>
     {% endif %}
 
-    <h1 style="text-align: center">Login</h1>
-
     <div class="login-form-container" id="login_form">
+        <h1 style="text-align: center">Login</h1>
         <form action="/login" method="POST">
             <div class="login-form-input">
-                <input type="email" name="email" id="email" placeholder="Email">
-            </div>
-            <br>
-            <div class="login-form-input">
-                <input type="password" name="password" id="password" placeholder="Password">
+                <input class="email-input" type="email" name="email" id="email" placeholder="Email">
+                <input class="password-input" type="password" name="password" id="password" placeholder="Password">
             </div>
             <br>
             <div class="login-form-submit">
