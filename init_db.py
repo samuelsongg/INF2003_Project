@@ -12,7 +12,7 @@ with open('schema.sql') as f:
 # Create an admin account.
 password = 'admin'
 password = generate_password_hash(password, method='pbkdf2:sha256')
-conn.execute('INSERT INTO users (first_name, email, password, account_type) VALUES (?, ?, ?, ?)', 
+conn.execute('INSERT INTO users (first_name, email, password, account_type) VALUES (?, ?, ?, ?)',
             ('administrator', 'admin@gmail.com', password, 'admin'))
             
 

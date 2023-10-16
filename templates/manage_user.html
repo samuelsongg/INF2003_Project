@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Ecommerce+</title>
+{% endblock %}
+
+{% block body %}
+
+<main class="container-fluid main-cart-container">
+  <h2>Manage User</h2>
+  <div class="user-list">
+    <ol>
+      {% for user in users %}
+      <li>
+        <div class="user-box-flex">
+          <div class="user-box-description">
+            <div class="first-name">
+              {% if user.lastname != null %}
+              Name: {{ user.first_name + " " + user.last_name }}
+              {% else %}
+              Name: {{ user.first_name }}
+              {% endif %}
+            </div>
+            <div class="email">
+              Email: {{ user.email }}
+            </div>
+            <div class="address">
+              Address: {{ user.address }}
+            </div>
+            <div class="phone-number">
+                Phone Number: {{ user.phone_number }}
+            </div>
+            <div class="account_type">
+                Account Type: {{ user.account_type }}
+            </div>
+            <div class="date-created">
+                Date Created: {{ user.time_created }}
+            </div>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+  </ol>
+  </div>                      
+</main>
+
+
+{% endblock %}

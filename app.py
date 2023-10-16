@@ -62,6 +62,18 @@ def add_item():
     
     return render_template('add_item.html')
 
+@app.route('/manage_user', methods=['GET', 'POST'])
+def manage_user():
+    try:
+        if request.method == 'GET':
+            conn = get_db_connection()
+            users = conn.execute('SELECT * FROM users').fetchall()
+            conn.close()
+            print("success")
+            return render_template('manage_user.html', users=users)
+    except Exception as e:
+        print(str(e))
+        return redirect('/')
     
 @app.route('/login', methods=['GET', 'POST'])
 def login():
