@@ -7,21 +7,27 @@
 {% block body %}
 
 <main class="container-fluid">
-  <h2>Wishlist</h2>                        
+  <h2>Wishlist</h2>
   <ol>
-      {% for item in shopping_cart %}
-      <li>
-        <div class="row col-md-2" id="item_name">
-          <div>
-            Item: {{ item.product_name }}
-          </div>
-          <div id="product_price">
-            Price: {{ item.product_price }}
-          </div>
+    {% for item in shopping_cart %}
+    <li>
+      <div class="row col-md-2" id="item_name">
+        <div>
+          Item: {{ item.product_name }}
         </div>
-        <br>
-      </li>
-      {% endfor %}
+        <div id="product_price">
+          Price: {{ item.product_price }}
+        </div>
+        <div>
+          <form action="/remove_from_wishlist" method="POST">
+            <input type="hidden" name="product_id" value="{{ item.product_id }}">
+            <input type="submit" value="Remove" class="btn btn-danger">
+          </form>
+        </div>
+      </div>
+      <br>
+    </li>
+    {% endfor %}
   </ol>
 </main>
 

@@ -193,6 +193,25 @@ def wishlist():
             return render_template('wishlist.html', shopping_cart=shopping_cart)
     except:
         return redirect('/login')
+
+
+@app.route('/remove_from_wishlist', methods=['POST'])
+def remove_from_wishlist():
+    if session['login_status'] == 1:
+        product_id = request.form['product_id']
+        user_id = session['user_id']
+
+        try:
+            conn = get_db_connection()
+            conn.execute('DELETE FROM wishlist WHERE user_id = ? AND product_id = ?',
+                         (user_id, product_id))
+            conn.commit()
+            conn.close()
+
+        except Exception as e:
+            print(str(e))
+
+    return redirect('/wishlist')
     
 if __name__ == '__main__':
     app.run(debug=True)
