@@ -199,3 +199,23 @@ td {
     width: 45px;
     text-align: center;
 }
+
+.delete-cart-container {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5px;
+    padding-right: 5px;
+}
+
+.delete-cart-form {
+    display: flex;
+    justify-content: center;
+}
+
+.delete-cart-button {
+    border: none;
+}
+
+.delete-cart-image {
+    height: 20px;
+}

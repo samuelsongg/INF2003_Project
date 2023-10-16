@@ -169,11 +169,20 @@ def cart_update():
             conn.execute('UPDATE shopping_cart SET product_quantity = ? WHERE user_id = ? AND product_id = ?', (request.form['quantity'], session['user_id'], request.form['product_id']))
             conn.commit()
             conn.close()
-            print(request.form['quantity'])
-            print(request.form['product_id'])
             return redirect('/cart')
     except:
-        print("Error")
+        return redirect('/cart')
+    
+@app.route('/cart_delete', methods=['GET', 'POST'])
+def cart_delete():
+    try:
+        if request.method == 'POST' and session['login_status'] == 1:
+            conn = get_db_connection()
+            conn.execute('DELETE FROM shopping_cart WHERE user_id = ? AND product_id = ?', (session['user_id'], request.form['product_id']))
+            conn.commit()
+            conn.close()
+            return redirect('/cart')
+    except:
         return redirect('/cart')
 
     

@@ -34,6 +34,14 @@
               </div>
             </div>
           </div>
+          <div class="delete-cart-container">
+            <form class="delete-cart-form" action="/cart_delete" method="POST">
+              <input class="product_id" type="hidden" name="product_id" value="{{ item.product_id }}">
+              <button class="delete-cart-button">
+                <img src="/static/css/icons/trash.svg" alt="delete-cart-image" class="delete-cart-image">
+              </button>
+            </form>
+          </div>
         </div>
       </li>
       {% endfor %}
