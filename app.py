@@ -5,6 +5,7 @@ import sqlite3
 
 from flask_pymongo import PyMongo
 import urllib
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 # Secret key needs to be set to enable sessions.
@@ -152,6 +153,8 @@ def logout():
     session.clear()
     return redirect('/')
 
+
+
 @app.route('/cart', methods=['GET', 'POST'])
 def cart():
     try:
@@ -246,6 +249,14 @@ def wishlist():
             return render_template('wishlist.html', shopping_cart=shopping_cart)
     except:
         return redirect('/login')
+    
+
+@app.route('/detailedItem/<product_id>', methods=['GET', 'POST'])
+def detailedItem(product_id):
+    product = db.product.find_one({"_id": ObjectId(product_id)})
+    print(product)
+    return render_template('detailedItem.html', product_id=product_id, product=product)
+
 
 
 @app.route('/remove_from_wishlist', methods=['POST'])

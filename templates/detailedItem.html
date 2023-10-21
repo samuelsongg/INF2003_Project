@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Ecommerce+</title>
+{% endblock %}
+
+{% block body %}
+
+<main class="container">
+    <div class="row">
+      <div class="col-md-6 text-center">
+        <img src="/static/css/images/unnamed.webp" class="img-fluid" alt="Product Image">
+      </div>
+  
+      <div class="col-md-6">
+        <h1>{{product.productName}}</h1>
+        <p class="lead">Price: ${{product.productPrice}}</p>
+        <p>{{product.productDescription}}</p>
+          <button type="submit" class="btn btn-primary">Add to Cart</button>
+      </div>
+  
+      <div class="col-md-12 mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Product Reviews</h2>
+            </div>
+            <div class="col-md-6 text-end">
+                <button type="button" class="btn btn-primary">Add a Review</button>
+            </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Review Title 1</h5>
+            <h6 class="card-subtitle mb-2 text-muted">By: John Doe</h6>
+            <p class="card-text">This is a great product! I love it.</p>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Review Title 2</h5>
+            <h6 class="card-subtitle mb-2 text-muted">By: Jane Smith</h6>
+            <p class="card-text">Not as expected. Disappointed with the quality.</p>
+          </div>
+        </div>
+
+        
+        <!-- You can loop through reviews here if you have a list of reviews -->
+      </div>
+    </div>
+  </main>
+
+{% endblock %}
