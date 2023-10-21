@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 import secrets
 import sqlite3
@@ -253,9 +253,27 @@ def wishlist():
 
 @app.route('/detailedItem/<product_id>', methods=['GET', 'POST'])
 def detailedItem(product_id):
+    if request.method == 'POST' and 'selectedRating' in request.form:
+        reviewTitle = request.form['reviewTitle']
+        reviewDescription = request.form['reviewDescription']
+        reviewRating = request.form['reviewRating']
+        user_id = session['user_id']
+        try:
+            conn = get_db_connection()
+            conn.execute('INSERT INTO review (user_id, review_title, review_description, review_rating, product_id) VALUES (?, ?, ?, ?, ?)', (user_id, reviewTitle, reviewDescription, reviewRating, product_id))
+            conn.commit()
+            conn.close()
+            print("success")
+            product = db.product.find_one({"_id": ObjectId(product_id)})
+            return render_template('detailedItem.html', product_id=product_id, product=product)
+        
+        except Exception as e:
+            print(str(e))
+            return render_template('index.html')
+
     product = db.product.find_one({"_id": ObjectId(product_id)})
-    print(product)
     return render_template('detailedItem.html', product_id=product_id, product=product)
+    
 
 
 
