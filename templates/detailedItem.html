@@ -60,26 +60,17 @@
             <button type="submit" class="btn btn-primary">Submit Review</button>
           </form>
         </div>
-        
+
+        {% for review in reviews %}
         <div class="card" style="margin-top: 20px;">
           <div class="card-body">
-            <h5 class="card-title">Review Title 1</h5>
-            <h6 class="card-subtitle mb-2 text-muted">By: John Doe</h6>
-            <p class="card-text">This is a great product! I love it.</p>
+            <h5 class="card-title">{{review.review_title}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{review.first_name}}</h6>
+            <p class="card-text">{{review.review_description}}</p>
           </div>
         </div>
-
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Review Title 2</h5>
-            <h6 class="card-subtitle mb-2 text-muted">By: Jane Smith</h6>
-            <p class="card-text">Not as expected. Disappointed with the quality.</p>
-          </div>
-        </div>
-
-
-
-
+        {% endfor %}
+      
         
         <!-- You can loop through reviews here if you have a list of reviews -->
       </div>

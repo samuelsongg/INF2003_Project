@@ -251,28 +251,50 @@ def wishlist():
         return redirect('/login')
     
 
+#Review part
+reviewQuery = '''
+    SELECT R.product_id, R.review_id, R.user_id, R.review_title, R.review_description, R.review_rating, R.product_id, R.time_created, U.first_name
+    FROM
+    review R, users U
+    WHERE
+    R.product_id = ? AND R.user_id = U.user_id
+'''
+
 @app.route('/detailedItem/<product_id>', methods=['GET', 'POST'])
 def detailedItem(product_id):
-    if request.method == 'POST' and 'selectedRating' in request.form:
-        reviewTitle = request.form['reviewTitle']
-        reviewDescription = request.form['reviewDescription']
-        reviewRating = request.form['reviewRating']
-        user_id = session['user_id']
-        try:
-            conn = get_db_connection()
-            conn.execute('INSERT INTO review (user_id, review_title, review_description, review_rating, product_id) VALUES (?, ?, ?, ?, ?)', (user_id, reviewTitle, reviewDescription, reviewRating, product_id))
-            conn.commit()
-            conn.close()
-            print("success")
-            product = db.product.find_one({"_id": ObjectId(product_id)})
-            return render_template('detailedItem.html', product_id=product_id, product=product)
-        
-        except Exception as e:
-            print(str(e))
-            return render_template('index.html')
+    try:
+        if request.method == 'POST' and 'reviewRating' in request.form:
+            reviewTitle = request.form['reviewTitle']
+            reviewDescription = request.form['reviewDescription']
+            reviewRating = request.form['reviewRating']
+            user_id = session['user_id']
 
-    product = db.product.find_one({"_id": ObjectId(product_id)})
-    return render_template('detailedItem.html', product_id=product_id, product=product)
+            try:
+                #Insert then Retrieve to reload page
+                conn = get_db_connection()
+                conn.execute('INSERT INTO review (user_id, review_title, review_description, review_rating, product_id) VALUES (?, ?, ?, ?, ?)', (user_id, reviewTitle, reviewDescription, reviewRating, product_id))
+                conn.commit()
+                reviews = conn.execute(reviewQuery, (product_id,)).fetchall()
+                conn.close()
+                #Get product info from mongodb
+                product = db.product.find_one({"_id": ObjectId(product_id)})
+                return render_template('detailedItem.html', product_id=product_id, product=product, reviews=reviews)
+            
+            except Exception as e:
+                print(str(e))
+                return render_template('index.html')
+            
+        elif request.method == 'GET':
+            conn = get_db_connection()
+            reviews = conn.execute(reviewQuery, (product_id,)).fetchall()
+            conn.close()
+            product = db.product.find_one({"_id": ObjectId(product_id)})
+            return render_template('detailedItem.html', product_id=product_id, product=product, reviews=reviews)
+
+    except Exception as e:
+        print(str(e))
+        return redirect('/login')
+
     
 
 
