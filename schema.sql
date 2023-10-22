@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS wishlist;
 DROP TABLE IF EXISTS payment;
 DROP TABLE IF EXISTS card_details;
 DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS order_items;
 
 
 CREATE TABLE users (
@@ -58,17 +59,6 @@ CREATE TABLE card_details (
     shipping_address varchar(100) NOT NULL,
     time_created DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
-CREATE TABLE orders (
-    order_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    order_price DECIMAL(10, 2) NOT NULL,
-    order_payment_method VARCHAR(255) NOT NULL,
-    card_id INTEGER,  
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (card_id) REFERENCES card_details(card_id)  
 );
 
 CREATE TABLE orders (
