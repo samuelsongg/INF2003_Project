@@ -215,9 +215,97 @@ def cart_delete():
             return redirect('/cart')
     except:
         return redirect('/cart')
-
     
 
+@app.route('/payment', methods=['GET', 'POST'])
+def payment():
+    try:
+        if (request.method == 'GET') and session['login_status'] == 1:
+            conn = get_db_connection()
+            shopping_cart = conn.execute(
+                'SELECT * FROM shopping_cart WHERE user_id = ?', (session['user_id'],)).fetchall()
+            card = conn.execute(
+                'SELECT * FROM card_details WHERE user_id = ?', (session['user_id'],)).fetchall()
+            total_price = sum(
+                item['product_price'] * item['product_quantity'] for item in shopping_cart)
+            session['total_price'] = total_price
+            conn.close()
+
+            card_exists = bool(card)
+
+            return render_template('payment.html', shopping_cart=shopping_cart, card_exists=card_exists, total_price=total_price, card=card)
+    except:
+        return redirect('/login.html')
+    
+
+@app.route('/order_success', methods=['GET', 'POST'])
+def order_success():
+    user_id = session['user_id']
+    card_id = request.form['card_id']
+    order_price = session.get('total_price')
+    order_payment_method = "card"
+    try:
+        if (request.method == 'POST'):
+            conn = get_db_connection()
+            conn.execute('INSERT INTO orders (user_id, card_id, order_price, order_payment_method) VALUES (?, ?, ?, ?)',
+                            (user_id, card_id, order_price, order_payment_method))
+            conn.commit()
+
+            cursor = conn.cursor()
+            cursor.execute("SELECT last_insert_rowid()")
+            order_id = cursor.fetchone()[0]
+
+            shopping_cart = conn.execute(
+                'SELECT * FROM shopping_cart WHERE user_id = ?', (session['user_id'],)).fetchall()
+
+            for item in shopping_cart:
+                product_id = item['product_id']
+                product_name = item['product_name']
+                product_price = item['product_price']
+                quantity = item['product_quantity']
+
+                conn.execute('INSERT INTO order_items (order_id, product_id, product_name, product_price, quantity) VALUES (?, ?, ?, ?, ?)',
+                            (order_id, product_id, product_name, product_price, quantity))
+                conn.commit()
+            
+            order = conn.execute(
+                'SELECT * FROM orders WHERE order_id = ?', (order_id,)).fetchall()
+            order_items = conn.execute(
+                'SELECT * FROM order_items WHERE order_id = ?', (order_id,)).fetchall()
+            
+            # conn.execute('DELETE FROM shopping_cart WHERE user_id = ?', (session['user_id'],))
+            conn.commit()
+            conn.close()
+
+            return render_template('order_success.html', order=order, order_items=order_items)
+    except Exception as e:
+            print(str(e))
+            return redirect('/payment')   
+    return render_template('order_success.html')
+    
+
+@app.route('/add_card', methods=['GET', 'POST'])
+def add_card():
+    if request.method == 'POST':
+        card_number = request.form['card_number']
+        exp_date = request.form['exp_date']
+        security_code = request.form['security_code']
+        full_name = request.form['full_name']
+        shipping_address = request.form['shipping_address']
+        user_id = session['user_id']
+
+        try:
+            conn = get_db_connection()
+            conn.execute('INSERT INTO card_details (user_id, card_number, exp_date, security_code, full_name, shipping_address) VALUES (?, ?, ?, ?, ?, ?)',
+                         (user_id, card_number, exp_date, security_code, full_name, shipping_address))
+            conn.commit()
+            conn.close()
+
+            return redirect('/payment')
+        except Exception as e:
+            return redirect('/login.html')    
+    return render_template('/add_card.html')
+        
 @app.route('/wishlist', methods=['GET', 'POST'])
 def wishlist():
     try:

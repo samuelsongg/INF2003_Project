@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Ecommerce+</title>
+{% endblock %}
+
+{% block body %}
+
+<main class="container">
+
+    <head>
+        <title>Order Success</title>
+    </head>
+
+    <body>
+        <h1>Order Success</h1>
+
+        <h2>Order Details</h2>
+        <table>
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Total Price</th>
+                <th>Payment Method</th>
+            </tr>
+            {% for detail in order %}
+            <tr>
+                <td>{{ detail.order_id }}</td>
+                <td>{{ detail.order_date }}</td>
+                <td>{{ detail.order_price }}</td>
+                <td>{{ detail.order_payment_method }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Ordered Items</h2>
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+            {% for item in order_items %}
+            <tr>
+                <td>{{ item.product_name }}</td>
+                <td>{{ item.product_price }}</td>
+                <td>{{ item.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <p>Thank you for your order!</p>
+    </body>
+</main>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Ecommerce+</title>
+{% endblock %}
+
+{% block body %}
+
+<main class="container-fluid main-cart-container">
+    <h2>Order Details</h2>
+    <form action="/order_success" method="POST">
+        <div class="shopping-cart-list">
+            <ol>
+                {% for item in shopping_cart %}
+                <li>
+                    <div class="product-box-flex">
+                        <div class="product-box-description">
+                            <div class="product-name" id="item_name">
+                                Item: {{ item.product_name }}
+                            </div>
+                            <div class="product-price" id="product_price">
+                                Price: {{ item.product_price }}
+                            </div>
+                        </div>
+                        <div class="product-box-quantity">
+                            <div class="product-quantity">
+                                <div class="quantity-attribute-name">
+                                    Quantity:
+                                </div>
+                                <div class="quantity-dynamic">
+                                    {{ item.product_quantity }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ol>
+            <div>Total Price: </div>
+            <div id="total_price">
+                {{ total_price }}
+            </div>
+        </div>
+        <h3>Payment and Shipping Details</h3>
+        <div class="col-md-2">
+            {% if not card_exists %}
+            <a href="/add_card" class="btn btn-primary" id="cart">Add New Card</a>
+            {% else %}
+            <div class="col-md-2">
+                {% for detail in card %}
+                <input type="text" id="card_id" name="card_id" required value="{{ detail.card_id }}" hidden>
+                
+                <label for="card_number">Card Number:</label>
+                <input type="text" id="card_number" name="card_number" required value="{{ detail.card_number }}"
+                    disabled>
+
+                <label for="exp_date">Expiration Date:</label>
+                <input type="text" id="exp_date" name="exp_date" required value="{{ detail.exp_date }}" disabled>
+
+                <label for="security_code">Security Code:</label>
+                <input type="text" id="security_code" name="security_code" required value="{{ detail.security_code }}"
+                    disabled>
+
+                <label for="full_name">Full Name:</label>
+                <input type="text" id="full_name" name="full_name" required value="{{ detail.full_name }}" disabled>
+
+                <label for="shipping_address">Shipping Address:</label>
+                <textarea id="shipping_address" name="shipping_address" disabled
+                    required>{{ detail.shipping_address }}</textarea>
+
+                {% endfor %}
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Confirm Payment</button>
+            </div>
+            {% endif %}
+        </div>
+    </form>
+</main>
+
+
+{% endblock %}

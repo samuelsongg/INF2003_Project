@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Ecommerce+</title>
+{% endblock %}
+
+{% block body %}
+
+<main class="container-fluid main-cart-container">
+    <h3>Payment and Shipping Details</h3>
+    <div class="col-md-2">
+        <form action="/add_card" method="POST">
+            <label for="card_number">Card Number:</label>
+            <input type="text" id="card_number" name="card_number" value="123" required>
+
+            <label for="exp_date">Expiration Date:</label>
+            <input type="text" id="exp_date" name="exp_date" required value="123">
+
+            <label for="security_code">Security Code:</label>
+            <input type="text" id="security_code" name="security_code" required value="123">
+
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" name="full_name" required value="123">
+
+            <label for="shipping_address">Shipping Address:</label>
+            <textarea id="shipping_address" name="shipping_address" required>123</textarea>
+
+            <button type="submit" class="btn btn-primary">Add Credit Card</button>
+        </form>
+    </div>
+</main>
+
+
+{% endblock %}
