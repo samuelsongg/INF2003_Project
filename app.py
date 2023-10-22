@@ -226,6 +226,20 @@ def cart_delete():
         return redirect('/cart')
     
 
+@app.route('/purchase_history', methods=['GET', 'POST'])
+def purchase_history():
+    try:
+        if request.method == 'GET':
+            conn = get_db_connection()
+            orders = conn.execute('SELECT * FROM orders').fetchall()
+            conn.close()
+
+            return render_template('purchase_history.html', orders=orders)
+
+    except Exception as e:
+        print(str(e))
+        return redirect('/')
+
 @app.route('/payment', methods=['GET', 'POST'])
 def payment():
     try:
