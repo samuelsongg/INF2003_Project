@@ -30,14 +30,23 @@ app.config["MONGO_URI"] = f"mongodb+srv://{escaped_username}:{escaped_password}@
 mongodb_client = PyMongo(app)
 db = mongodb_client.db
 
-#Display item
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
     products = []
+    #Fetch products from MongoDB
     for product in db.product.find().sort("productName"):
         product["_id"] = str(product["_id"])
         products.append(product)
-        # print(product)
+
+    #Get average rating for each product
+    for product in products:
+        product_id = product["_id"]
+        conn = get_db_connection()
+        avg_rating = (conn.execute('SELECT AVG(review_rating) from review WHERE product_id=?', (product_id,))).fetchone()[0]
+        conn.close()
+        product["avg_rating"] = avg_rating
+
     return render_template('index.html', products=products)
 
 #Adding new item
@@ -101,7 +110,7 @@ def login():
         # Check if the user exists in the database
         try:
             conn = get_db_connection()
-            user = conn.execute('SELECT * FROM users WHERE email = ?', (email,)).fetchone()
+            user = conn.execute('SELECT * FROM users WHERE email = ?', (email,)).fetchone()[0]
             conn.close()
 
             if check_password_hash(user['password'], password):

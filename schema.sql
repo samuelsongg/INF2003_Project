@@ -91,3 +91,15 @@ CREATE TABLE order_items (
     quantity INT,
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
+
+
+CREATE TABLE review (
+    review_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    review_title varchar(100) NOT NULL,
+    review_description varchar(200),
+    review_rating INTEGER NOT NULL,
+    product_id VARCHAR(100) NOT NULL,
+    time_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
