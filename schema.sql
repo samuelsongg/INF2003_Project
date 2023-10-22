@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS order_items;
 
 
+
 CREATE TABLE users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name varchar(50) NOT NULL,
