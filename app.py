@@ -110,7 +110,7 @@ def login():
         # Check if the user exists in the database
         try:
             conn = get_db_connection()
-            user = conn.execute('SELECT * FROM users WHERE email = ?', (email,)).fetchone()[0]
+            user = conn.execute('SELECT * FROM users WHERE email = ?', (email,)).fetchone()
             conn.close()
 
             if check_password_hash(user['password'], password):
