@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-md-2">Filter part</div>
 
-      <div class="col-md-8">
+      <div class="col-md-8 add-item-form">
         
         <form action="/add_item" method="POST"  class="row g-3">
             <div class="col-12">
@@ -20,20 +20,15 @@
 
             <div class="col-md-6">
               <label for="productStock" class="form-label">Stock</label>
-              <input type="text" name="productStock" class="form-control" id="productStock">
+              <input type="text" name="productStock" class="form-control" id="productStock" placeholder="E.g. 50">
             </div>
             <div class="col-md-4">
               <label for="productCategory" class="form-label">Category</label>
-              <select id="productCategory" class="form-select" name="productCategory">
-                <option selected>Choose...</option>
-                <option>Leaf</option>
-                <option>Mushroom</option>
-                <option>Pepper</option>
-              </select>
+              <input type="text" name="productCategory" class="form-control" id="productCategory" placeholder="E.g. Mushroom">
             </div>
             <div class="col-md-2">
               <label for="productPrice" class="form-label">Price</label>
-              <input type="text" name="productPrice" class="form-control" id="productPrice">
+              <input type="text" name="productPrice" class="form-control" id="productPrice" placeholder="E.g. 11">
             </div>
             
             <div class="col-12">
@@ -47,7 +42,7 @@
             </div>
 
             <div class="col-12">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="add-item-submit-btn">Submit</button>
             </div>
           </form>
 

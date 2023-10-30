@@ -290,3 +290,13 @@ td {
     padding: 0px 5px 5px 5px;
     background-color: rgb(202, 215, 219);
   }
+
+  .add-item-form {
+    display: flex;
+  }
+
+  .add-item-submit-btn {
+    color: red;
+    align-items: right;
+    justify-content: right;
+  }
