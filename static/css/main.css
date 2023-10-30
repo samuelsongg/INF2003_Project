@@ -268,3 +268,25 @@ td {
   .star:hover {
     color: gold; /* Change to yellow on hover */
   }
+
+  .product-image-preview {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+  }
+
+  .product-image-actual {
+    width: 500px;
+    height: 500px;
+    object-fit: contain;
+  }
+
+  .product-card {
+    margin-bottom: 20px;
+    border: solid;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-width: 1px;
+    border-radius: 5px;
+    padding: 0px 5px 5px 5px;
+    background-color: rgb(202, 215, 219);
+  }

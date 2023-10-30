@@ -58,13 +58,15 @@ def add_item():
         productCategory = request.form['productCategory']
         productPrice = request.form['productPrice']
         productDescription = request.form['productDescription']
+        productImage = request.form['productImage']
 
         db.product.insert_one({
             "productName": productName,
             "productStock": productStock,
             "productCategory": productCategory,
             "productPrice": productPrice,
-            "productDescription": productDescription
+            "productDescription": productDescription,
+            "productImage": productImage
         })
 
         flash("Added new item successfully", "success")
