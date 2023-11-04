@@ -16,7 +16,12 @@
         <h1>{{product.productName}}</h1>
         <p class="lead">Price: ${{product.productPrice}}</p>
         <p>{{product.productDescription}}</p>
-          <button type="submit" class="btn btn-primary">Add to Cart</button>
+        {% for key, value in product.items() %}
+          {% if loop.index0 > 6 %}
+            <p>{{key}}: {{value}}</p>
+          {% endif %}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Add to Cart</button>
       </div>
   
       <div class="col-md-12 mt-4">
