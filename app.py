@@ -52,27 +52,60 @@ def index():
 #Adding new item
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
+    if request.method == 'GET':
+        session['product_tag_number'] = 1
+        session.pop('tagName', None)
+        session.pop('tagValue', None)
+        session.pop('productName', None)
+        session.pop('productStock', None)
+        session.pop('productCategory', None)
+        session.pop('productPrice', None)
+        session.pop('productDescription', None)
+        session.pop('productImage', None)
+        return render_template('add_item.html')
+
     if request.method == 'POST':
-        productName = request.form['productName']
-        productStock = request.form['productStock']
-        productCategory = request.form['productCategory']
-        productPrice = request.form['productPrice']
-        productDescription = request.form['productDescription']
-        productImage = request.form['productImage']
+        if (request.form['submit'] == "AddTag"):
+            session['product_tag_number'] += 1
+            session['tagName'] = request.form.getlist('tagName')
+            session['tagValue'] = request.form.getlist('tagValue')
+            session['productName'] = request.form['productName']
+            session['productStock'] = request.form['productStock']
+            session['productCategory'] = request.form['productCategory']
+            session['productPrice'] = request.form['productPrice']
+            session['productDescription'] = request.form['productDescription']
+            session['productImage'] = request.form['productImage']
+            return render_template('add_item.html')
 
-        db.product.insert_one({
-            "productName": productName,
-            "productStock": productStock,
-            "productCategory": productCategory,
-            "productPrice": productPrice,
-            "productDescription": productDescription,
-            "productImage": productImage
-        })
+        elif (request.form['submit'] == "Submit"):
+            productName = request.form['productName']
+            productStock = request.form['productStock']
+            productCategory = request.form['productCategory']
+            productPrice = request.form['productPrice']
+            productDescription = request.form['productDescription']
+            productImage = request.form['productImage']
 
-        flash("Added new item successfully", "success")
-        return redirect("/add_item")
-    
-    return render_template('add_item.html')
+            product_data = {
+                "productName": productName,
+                "productStock": productStock,
+                "productCategory": productCategory,
+                "productPrice": productPrice,
+                "productDescription": productDescription,
+                "productImage": productImage
+            }
+
+            tag_names = request.form.getlist('tagName')
+            tag_values = request.form.getlist('tagValue')
+
+            for i in range(session['product_tag_number']):
+                tag_name = tag_names[i]
+                tag_value = tag_values[i]
+                product_data[tag_name] = tag_value
+
+            db.product.insert_one(product_data)
+
+            flash("Added new item successfully", "success")
+            return redirect("/add_item")
 
 @app.route('/manage_user', methods=['GET', 'POST'])
 def manage_user():

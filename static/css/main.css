@@ -295,8 +295,32 @@ td {
     display: flex;
   }
 
-  .add-item-submit-btn {
-    color: red;
-    align-items: right;
-    justify-content: right;
+  .tag-header {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .tag-header-name {
+    margin-bottom: 0px;
+    padding-right: 5px;
+  }
+
+  .tag-key-value-pair {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .tag-name, .tag-value {
+    padding-right: 5px;
+    margin-top: -25px;
+    margin-bottom: 20px;
+  }
+
+  .item-button-div {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .add-product-tag-btn {
+    margin-right: 10px;
   }

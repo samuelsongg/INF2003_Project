@@ -15,34 +15,60 @@
         <form action="/add_item" method="POST"  class="row g-3">
             <div class="col-12">
               <label for="productName" class="form-label">Name</label>
-              <input type="text" name="productName" class="form-control" id="productName">
+              <input type="text" name="productName" class="form-control" id="productName" value="{{ session['productName'] }}">
             </div>
 
             <div class="col-md-6">
               <label for="productStock" class="form-label">Stock</label>
-              <input type="text" name="productStock" class="form-control" id="productStock" placeholder="E.g. 50">
+              <input type="text" name="productStock" class="form-control" id="productStock" placeholder="E.g. 50" value="{{ session['productStock'] }}">
             </div>
             <div class="col-md-4">
               <label for="productCategory" class="form-label">Category</label>
-              <input type="text" name="productCategory" class="form-control" id="productCategory" placeholder="E.g. Mushroom">
+              <input type="text" name="productCategory" class="form-control" id="productCategory" placeholder="E.g. Mushroom" value="{{ session['productCategory'] }}">
             </div>
             <div class="col-md-2">
               <label for="productPrice" class="form-label">Price</label>
-              <input type="text" name="productPrice" class="form-control" id="productPrice" placeholder="E.g. 11">
+              <input type="text" name="productPrice" class="form-control" id="productPrice" placeholder="E.g. 11" value="{{ session['productPrice'] }}">
             </div>
             
             <div class="col-12">
               <label for="productDescription" class="form-label">Description</label>
-              <input type="text" name="productDescription" class="form-control" id="productDescription" placeholder="Item Description">
-            </div>
-
-            <div class="col-12 product-image-url">
-              <label for="productImage" class="form-label">Image URL</label>
-              <input type="text" name="productImage" class="form-control" id="productImage" placeholder="Image URL">
+              <input type="text" name="productDescription" class="form-control" id="productDescription" placeholder="Item Description" value="{{ session['productDescription'] }}">
             </div>
 
             <div class="col-12">
-              <button type="submit" class="add-item-submit-btn">Submit</button>
+              <label for="productImage" class="form-label">Image URL</label>
+              <input type="text" name="productImage" class="form-control" id="productImage" placeholder="Image URL" value="{{ session['productImage'] }}">
+            </div>
+
+            <div class="tag-header">
+              <div class="col-md-2 tag-header-name">
+                <p>Tag Name</p>
+              </div>
+              <div class="col-md-2 tag-header-value">
+                <p>Tag Value</p>
+              </div>
+            </div>
+
+            {% for i in range(session['product_tag_number']) %}
+            <div class="tag-key-value-pair">
+              <div class="col-md-2 tag-name">
+                <input type="text" name="tagName" class="form-control" id="tagName" placeholder="E.g. Size" value="{% if 'tagName' in session %}{{ session['tagName'][i] }}{% endif %}">
+              </div>
+  
+              <div class="col-md-2 tag-value">
+                <input type="text" name="tagValue" class="form-control" id="tagValue" placeholder="E.g. Small" value="{% if 'tagValue' in session %}{{ session['tagValue'][i] }}{% endif %}">
+              </div>
+            </div>
+            {% endfor %}
+
+            <div class="col-12 item-button-div">
+              <div class="add-product-tag-div">
+                  <button type="submit" name="submit" value="AddTag" class="btn btn-primary add-product-tag-btn">Add More Tags</button>
+              </div>
+              <div class="add-product-submit-div">
+                <button type="submit" name="submit" value="Submit" class="btn btn-primary add-product-submit-btn">Submit</button>
+              </div>
             </div>
           </form>
 
