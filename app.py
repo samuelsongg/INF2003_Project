@@ -106,6 +106,11 @@ def add_item():
 
             flash("Added new item successfully", "success")
             return redirect("/add_item")
+        
+@app.route('/edit_item', methods=['GET', 'POST'])
+def edit_item():
+    if request.method == 'GET':
+        return render_template('edit_item.html')
 
 @app.route('/manage_user', methods=['GET', 'POST'])
 def manage_user():
