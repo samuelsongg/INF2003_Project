@@ -68,7 +68,10 @@
                   <input type="hidden" name="product_id" value="{{ product._id }}">
                   <input type="hidden" name="product_name" value="{{ product.productName}}">
                   <input type="hidden" name="product_price" value="{{ product.productPrice}}">
-                  <input type="submit" value="Add to Cart" class="btn btn-primary" id="add_to_cart">
+                  {% if session['account_type'] == 'admin' %}
+                  <input type="submit" name="submit" value="Edit Product" class="btn btn-primary" id="edit_product">
+                  {% endif %}
+                  <input type="submit" name="submit" value="Add to Cart" class="btn btn-primary" id="add_to_cart">
                 </form>
               </div>
 

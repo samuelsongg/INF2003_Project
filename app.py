@@ -110,6 +110,7 @@ def add_item():
 @app.route('/edit_item', methods=['GET', 'POST'])
 def edit_item():
     if request.method == 'GET':
+        # Insert code here...
         return render_template('edit_item.html')
 
 @app.route('/manage_user', methods=['GET', 'POST'])
@@ -207,7 +208,7 @@ def logout():
 @app.route('/cart', methods=['GET', 'POST'])
 def cart():
     try:
-        if request.method == 'POST' and session['login_status'] == 1:
+        if request.method == 'POST' and session['login_status'] == 1 and request.form['submit'] == "Add to Cart":
             product_id = request.form['product_id']
             product_name = request.form['product_name']
             product_price = request.form['product_price']
@@ -228,9 +229,28 @@ def cart():
 
                 return redirect('/')
             
-            except Exception as e:
-                print(str(e))
+            except:
                 return render_template('index.html')
+            
+        elif request.method == 'POST' and session['login_status'] == 1 and request.form['submit'] == "Edit Product":
+            product_id = request.form['product_id']
+            product_list = db.product.find_one({"_id": ObjectId(product_id)})
+            product_name = product_list['productName']
+            product_stock = product_list['productStock']
+            product_category = product_list['productCategory']
+            product_price = product_list['productPrice']
+            product_description = product_list['productDescription']
+            product_image = product_list['productImage']
+
+            tag_name_list = []
+            tag_value_list = []
+
+            for i, (key, value) in enumerate(product_list.items()):
+                if i >= 7:
+                    tag_name_list.append(key)
+                    tag_value_list.append(value)
+
+            return render_template('edit_item.html', product_id=product_id, product_name=product_name, product_stock=product_stock, product_category=product_category, product_price=product_price, product_description=product_description, product_image=product_image, tag_name_list=tag_name_list, tag_value_list=tag_value_list)
     
         elif request.method == 'GET':
             conn = get_db_connection()
@@ -238,7 +258,8 @@ def cart():
             conn.close()
 
             return render_template('cart.html', shopping_cart=shopping_cart)
-    except:
+    except Exception as e:
+        print(str(e))
         return redirect('/login')
     
 @app.route('/cart_update', methods=['GET', 'POST'])
