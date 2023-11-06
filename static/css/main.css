@@ -219,12 +219,14 @@ td {
 }
 
 .delete-cart-button,
-.delete-user-button {
+.delete-user-button,
+.delete-product-tag-button {
     border: none;
 }
 
 .delete-cart-image,
-.delete-user-image {
+.delete-user-image,
+.delete-product-tag-image {
     height: 20px;
 }
 
@@ -321,6 +323,17 @@ td {
     flex-direction: row;
   }
 
-  .add-product-tag-btn {
+  .add-product-tag-btn,
+  .update-product-btn {
     margin-right: 10px;
   }
+
+  .delete-product-tag-div {
+    position: relative;
+    bottom: 20px;
+  }
+
+  .delete-product-tag-button {
+    background-color: white;
+  }
+

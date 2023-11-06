@@ -137,20 +137,38 @@ def edit_item():
             session['productImage'] = request.form['productImage']
 
             query = {"_id": ObjectId(session['productID'])}
-            update = {"$set": {"productName": session['productName'],
-                               "productStock": session['productStock'],
-                               "productCategory": session['productCategory'],
-                               "productPrice": session['productPrice'],
-                               "productDescription": session['productDescription'],
-                               "productImage": session['productImage']}}
+            update = {"productName": session['productName'],
+                        "productStock": session['productStock'],
+                        "productCategory": session['productCategory'],
+                        "productPrice": session['productPrice'],
+                        "productDescription": session['productDescription'],
+                        "productImage": session['productImage']}
             
+            temp_tag_counter = 0
+            temp_tag_name = []
+            temp_tag_value = []
+            for i in range(session['product_tag_number']):
+                if session['tagName'][i] != "":
+                    temp_tag_name.append(session['tagName'][i])
+                    temp_tag_value.append(session['tagValue'][i])
+                    temp_tag_counter += 1
+            
+            session['tagName'] = temp_tag_name
+            session['tagValue'] = temp_tag_value
+            session['product_tag_number'] = temp_tag_counter
+
             for i in range(session['product_tag_number']):
                 tag_name = session['tagName'][i]
                 tag_value = session['tagValue'][i]
-                update["$set"][tag_name] = tag_value
+                update[tag_name] = tag_value
                 
-            db.product.update_one(query, update)
-            return render_template('index.html')
+            db.product.replace_one(query, update)
+            return redirect("/")
+        
+        if (request.form['submit'] == "Delete"):
+            query = {"_id": ObjectId(session['productID'])}
+            db.product.delete_one(query)
+            return redirect("/")
             
 
 @app.route('/manage_user', methods=['GET', 'POST'])
