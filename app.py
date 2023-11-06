@@ -112,6 +112,46 @@ def edit_item():
     if request.method == 'GET':
         # Insert code here...
         return render_template('edit_item.html')
+    
+    if request.method == 'POST':
+        if (request.form['submit'] == "AddTag"):
+            session['product_tag_number'] += 1
+            session['tagName'] = request.form.getlist('tagName')
+            session['tagValue'] = request.form.getlist('tagValue')
+            session['productName'] = request.form['productName']
+            session['productStock'] = request.form['productStock']
+            session['productCategory'] = request.form['productCategory']
+            session['productPrice'] = request.form['productPrice']
+            session['productDescription'] = request.form['productDescription']
+            session['productImage'] = request.form['productImage']
+            return render_template('edit_item.html')
+        
+        if (request.form['submit'] == "Update"):
+            session['tagName'] = request.form.getlist('tagName')
+            session['tagValue'] = request.form.getlist('tagValue')
+            session['productName'] = request.form['productName']
+            session['productStock'] = request.form['productStock']
+            session['productCategory'] = request.form['productCategory']
+            session['productPrice'] = request.form['productPrice']
+            session['productDescription'] = request.form['productDescription']
+            session['productImage'] = request.form['productImage']
+
+            query = {"_id": ObjectId(session['productID'])}
+            update = {"$set": {"productName": session['productName'],
+                               "productStock": session['productStock'],
+                               "productCategory": session['productCategory'],
+                               "productPrice": session['productPrice'],
+                               "productDescription": session['productDescription'],
+                               "productImage": session['productImage']}}
+            
+            for i in range(session['product_tag_number']):
+                tag_name = session['tagName'][i]
+                tag_value = session['tagValue'][i]
+                update["$set"][tag_name] = tag_value
+                
+            db.product.update_one(query, update)
+            return render_template('index.html')
+            
 
 @app.route('/manage_user', methods=['GET', 'POST'])
 def manage_user():
@@ -235,12 +275,13 @@ def cart():
         elif request.method == 'POST' and session['login_status'] == 1 and request.form['submit'] == "Edit Product":
             product_id = request.form['product_id']
             product_list = db.product.find_one({"_id": ObjectId(product_id)})
-            product_name = product_list['productName']
-            product_stock = product_list['productStock']
-            product_category = product_list['productCategory']
-            product_price = product_list['productPrice']
-            product_description = product_list['productDescription']
-            product_image = product_list['productImage']
+            session['productID'] = product_id
+            session['productName'] = product_list['productName']
+            session['productStock'] = product_list['productStock']
+            session['productCategory'] = product_list['productCategory']
+            session['productPrice'] = product_list['productPrice']
+            session['productDescription'] = product_list['productDescription']
+            session['productImage'] = product_list['productImage']
 
             tag_name_list = []
             tag_value_list = []
@@ -249,8 +290,12 @@ def cart():
                 if i >= 7:
                     tag_name_list.append(key)
                     tag_value_list.append(value)
-
-            return render_template('edit_item.html', product_id=product_id, product_name=product_name, product_stock=product_stock, product_category=product_category, product_price=product_price, product_description=product_description, product_image=product_image, tag_name_list=tag_name_list, tag_value_list=tag_value_list)
+            
+            session['tagName'] = tag_name_list
+            session['tagValue'] = tag_value_list
+            session['product_tag_number'] = len(tag_name_list)
+            
+            return render_template('edit_item.html')
     
         elif request.method == 'GET':
             conn = get_db_connection()
