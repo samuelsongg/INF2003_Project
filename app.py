@@ -113,10 +113,11 @@ def edit_item():
         # Insert code here...
         return render_template('edit_item.html')
     
+    # If user presses on "Add Tag" button, add a new tag field
     if request.method == 'POST':
         if (request.form['submit'] == "AddTag"):
-            session['product_tag_number'] += 1
-            session['tagName'] = request.form.getlist('tagName')
+            session['product_tag_number'] += 1 # Adds 1 to the tag number
+            session['tagName'] = request.form.getlist('tagName') 
             session['tagValue'] = request.form.getlist('tagValue')
             session['productName'] = request.form['productName']
             session['productStock'] = request.form['productStock']
@@ -126,6 +127,7 @@ def edit_item():
             session['productImage'] = request.form['productImage']
             return render_template('edit_item.html')
         
+        # If user presses on "Update" button, update the product in the database
         if (request.form['submit'] == "Update"):
             session['tagName'] = request.form.getlist('tagName')
             session['tagValue'] = request.form.getlist('tagValue')
@@ -144,27 +146,33 @@ def edit_item():
                         "productDescription": session['productDescription'],
                         "productImage": session['productImage']}
             
-            temp_tag_counter = 0
-            temp_tag_name = []
-            temp_tag_value = []
+            temp_tag_counter = 0 # To count how many tags are there
+            temp_tag_name = [] # To store the tag name
+            temp_tag_value = [] # To store the tag value
+            
+            # To check if the tag name is empty or not
             for i in range(session['product_tag_number']):
                 if session['tagName'][i] != "":
                     temp_tag_name.append(session['tagName'][i])
                     temp_tag_value.append(session['tagValue'][i])
                     temp_tag_counter += 1
             
+            # Update the session variables with the new tag name and value
             session['tagName'] = temp_tag_name
             session['tagValue'] = temp_tag_value
             session['product_tag_number'] = temp_tag_counter
 
+            # To update the tag name and value
             for i in range(session['product_tag_number']):
                 tag_name = session['tagName'][i]
                 tag_value = session['tagValue'][i]
                 update[tag_name] = tag_value
                 
+            # Replace the old data with the new data according to the product ID
             db.product.replace_one(query, update)
             return redirect("/")
         
+        # If user presses on "Delete" button, delete the product from the database
         if (request.form['submit'] == "Delete"):
             query = {"_id": ObjectId(session['productID'])}
             db.product.delete_one(query)
