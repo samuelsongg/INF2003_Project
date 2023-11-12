@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Ecommerce+</title>
+{% endblock %}
+
+{% block body %}
+<div class="signup-content">
+    {% if edit_status == 1 %}
+        <h1 class="wrong-credentials-msg">Updated successfully</h1>
+    {% elif edit_status == 0 %}
+        <h1 class="wrong-credentials-msg">Update not successfully</h1>
+    {% endif %}
+    <div class="signup-form-container" id="signup_form">
+        <h1 style="text-align: center">My Profile</h1>
+        <form action="/editprofile" method="POST">
+            <div class="signup-form-input">
+                <input class="sign-up-input" type="text" name="first_name" id="first_name" placeholder="First Name" value="{{user.first_name}}" required>
+                <input class="sign-up-input" type="text" name="last_name" id="last_name" placeholder="Last Name" value="{{user.last_name}}">
+                <input class="sign-up-input" type="email" name="email" id="email" value="{{user.email}}" disabled>
+                <input class="sign-up-input" type="password" name="password" id="password" value="NOPASSWORD" disabled masked>
+                <input class="sign-up-input" type="text" name="address" id="address" placeholder="Address" value="{{user.address}}" required>
+                <input class="sign-up-input" type="text" name="phone_number" id="phone_number" placeholder="Phone Number: 81234567" value="{{user.phone_number}}" pattern="[0-9]{8}" required>
+            </div>
+            <div class="sign-up-submit-button">
+                <input type="submit" value="Edit">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

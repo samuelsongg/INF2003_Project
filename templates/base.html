@@ -21,6 +21,14 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                   </li>
+                  {% if session['login_status'] == 1 %}
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/profile">My Profile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/user_purchase_history">My Purchase History</a>
+                  </li>
+                  {% endif %}
                   {% if session['login_status'] == 1 and session['account_type'] == 'admin' %}
                   <li class="nav-item">
                     <a class="nav-link active" href="/add_item">Add Item</a>

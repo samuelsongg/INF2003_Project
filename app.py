@@ -559,6 +559,54 @@ def remove_from_wishlist():
             print(str(e))
 
     return redirect('/wishlist')
-    
+
+@app.route('/profile', methods=['GET'])
+def profile():
+    # Retrieve user data
+    try:
+        user_id = session['user_id']
+        conn = get_db_connection()
+        user = conn.execute('SELECT * FROM users WHERE user_id = ?', (user_id,)).fetchone()
+        conn.close()
+        return render_template('profile.html', user=user)
+
+    except Exception as e:
+        print(str(e))
+        return redirect('/login')
+
+@app.route('/editprofile', methods=['POST'])
+def editprofile():
+    try:
+        user_id = session['user_id']
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        address = request.form['address']
+        phone_number = request.form['phone_number']
+
+        conn = get_db_connection()
+        conn.execute('UPDATE users SET first_name = ?, last_name = ?, address = ?, phone_number = ? WHERE user_id = ?',(first_name, last_name, address, phone_number, user_id))
+        conn.commit()
+        # To retrieve updated user value
+        user = conn.execute('SELECT * FROM users WHERE user_id = ?', (user_id,)).fetchone()
+        conn.close()
+        return render_template('profile.html', user=user, edit_status=1)
+
+    except Exception as e:
+        print(str(e))
+        return render_template('profile.html', user=user, edit_status=0)
+
+@app.route('/user_purchase_history', methods=['GET'])
+def user_purchase_history():
+    try:
+        user_id = session['user_id']
+        conn = get_db_connection()
+        orders = conn.execute('SELECT * FROM orders WHERE user_id = ?', (user_id,)).fetchall()
+        conn.close()
+        return render_template('user_purchase_history.html', orders=orders)
+
+    except Exception as e:
+        print(str(e))
+        return redirect('/')
+
 if __name__ == '__main__':
     app.run(debug=True)
