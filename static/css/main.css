@@ -337,3 +337,36 @@ td {
     background-color: white;
   }
 
+  #Company-name {
+    color: #B6E1E7;
+    font-size: 30px ;
+  }
+
+  .btn-outline-success {
+    margin-right: 10px;
+  }
+
+  
+#nav-bar {
+    background-color: #323232 !important;
+  }
+
+body{
+    background-color: #EFFAFD !important;
+}
+
+.nav-link {
+    font-size: 22px !important;
+    margin-top: -3px;
+    color: white !important;
+}
+.nav-link:hover {
+    border-bottom: 3px solid red;
+  }
+.nav-link[aria-current="page"] {
+    border-bottom: 3px solid red;
+}
+
+.custom-toggler.navbar-toggler {
+    border-color: white !important;
+}

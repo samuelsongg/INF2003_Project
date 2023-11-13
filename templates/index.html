@@ -7,14 +7,14 @@
 {% block body %}
 <main class="container-fluid">
   <div class="row">
-    <div class="col-md-2">Filter part</div>
+    <div class="col-lg-1 col-md-2 col-sm-3">Filter part</div>
 
-    <div class="col-md-8">
+    <div class="col-lg-11 col-md-10 col-sm-9">
       <div class="row justify-content-evenly">
 
         {% for product in products %}
 
-        <div class="col-md-4 product-grid">
+        <div class="col-lg-4 col-md-8 col-sm-12 product grid">	
           <div class="product-card" style="width: 18rem;" style="max-width: 100%; height: auto;">
 
             <a href="/detailedItem/{{ product._id }}"><img src="{{ product.productImage }}"" class="card-img-top product-image-preview" alt="..."></a>
