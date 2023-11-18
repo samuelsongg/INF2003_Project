@@ -58,7 +58,7 @@ def get_top_products():
     ''').fetchall()
     conn.close()
 
-    # Get the product image, name, and price from MongoDB
+    # Get the product details from MongoDB
     top_products = []
     for product_id in top_products_id:
         product = db.product.find_one({"_id": ObjectId(product_id[0])})
