@@ -12,6 +12,28 @@
     <div class="col-lg-11 col-md-10 col-sm-9">
       <div class="row justify-content-evenly">
 
+        <!-- Display top 3 products using image url, name, and price -->
+        {% if top_products %}
+        <div class="col-lg-12">
+          <h2>Popular Products</h2>
+            <div class="top_product justify-content-evenly" style="display: flex;">	
+              {% for top_product in top_products %}
+              <!-- Display top product details here -->
+              <div class="product-card" style="width: 18rem; max-width: 100%; height: auto;">
+                <img src="{{ top_product.productImage }}"" class="card-img-top product-image-preview" alt="...">
+                <div class="card-body">
+                  <p class="card-subtitle mb-2 text-muted">{{ top_product.productCategory }}</p>
+                  <h6 class="card-title">{{ top_product.productName }}</h6>
+                  <p class="font-weight-bold">${{ top_product.productPrice }}</p>
+                </div>
+              </div>
+            {% endfor %}
+            </div>
+          <hr>
+        </div>
+        {% endif %}
+
+        <h2>All Products</h2>
         {% for product in products %}
 
         <div class="col-lg-4 col-md-8 col-sm-12 product grid">	

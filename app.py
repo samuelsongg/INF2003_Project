@@ -17,12 +17,6 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-# Troubleshooting purposes.
-# conn = get_db_connection()
-# test = conn.execute('SELECT * FROM users').fetchall()
-# print(test)
-# conn.close()
-
 #Connecting to mongoDB
 escaped_username = urllib.parse.quote_plus("malcolm5964")
 escaped_password = urllib.parse.quote_plus("@T0012069z")
@@ -47,7 +41,31 @@ def index():
         conn.close()
         product["avg_rating"] = avg_rating
 
-    return render_template('index.html', products=products)
+    # Get top 3 products based on quantity sold
+    top_products = get_top_products()
+
+    return render_template('index.html', products=products, top_products=top_products)
+
+def get_top_products():
+    # SQLite query to get the top 3 products based on quantity sold
+    conn = get_db_connection()
+    top_products_id = conn.execute('''
+        SELECT product_id, SUM(quantity) AS total_quantity
+        FROM order_items
+        GROUP BY product_id, product_name
+        ORDER BY total_quantity DESC
+        LIMIT 3;
+    ''').fetchall()
+    conn.close()
+
+    # Get the product image, name, and price from MongoDB
+    top_products = []
+    for product_id in top_products_id:
+        product = db.product.find_one({"_id": ObjectId(product_id[0])})
+        product["_id"] = str(product["_id"])
+        top_products.append(product)
+        
+    return top_products
 
 #Adding new item
 @app.route('/add_item', methods=['GET', 'POST'])
