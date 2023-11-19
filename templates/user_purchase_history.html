@@ -14,7 +14,8 @@
             <tr>
                 <th>Order ID</th>
                 <th>Order Date</th>
-                <th>Total Price</th>
+                <th>Item</th>
+                <th>Price</th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +23,8 @@
             <tr>
                 <td>{{ order.order_id }}</td>
                 <td>{{ order.order_date }}</td>
-                <td>${{ order.order_price }}</td>
+                <td>{{ order.product_name }}</td>
+                <td>${{ order.product_price }}</td>
             </tr>
             {% endfor %}
         </tbody>
