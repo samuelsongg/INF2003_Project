@@ -18,4 +18,4 @@
 ## Troubleshooting
 - Make sure to activate the virtual environment:
     - `env\Scripts\activate`
-- To reset all databases run `python init_db.py`.
+- To reset all SQL databases run `python init_db.py`.
