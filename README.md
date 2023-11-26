@@ -14,8 +14,15 @@
     - `env\Scripts\activate`
 2. Enter `python app.py` in powershell.
 3. Navigate to `localhost:5000` in browser.
+    - Admin account:
+        - Username: `admin@gmail.com`
+        - Password: `admin`
 
 ## Troubleshooting
 - Make sure to activate the virtual environment:
     - `env\Scripts\activate`
 - To reset all SQL databases run `python init_db.py`.
+
+## Admin Account for 
+- Username: admin@gmail.com
+- Password: admin
